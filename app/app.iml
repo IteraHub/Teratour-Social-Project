@@ -103,21 +103,22 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="realm-annotations-3.7.2" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-26.0.0-alpha1" level="project" />
+    <orderEntry type="library" exported="" name="realm-android-library-3.7.2" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="support-fragment-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="transition-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-26.0.0-alpha1" level="project" />
+    <orderEntry type="library" exported="" name="jsr305-3.0.2" level="project" />
     <orderEntry type="library" exported="" name="migbase64-2.2" level="project" />
     <orderEntry type="library" exported="" name="1_migbase64-2.2" level="project" />
     <orderEntry type="library" exported="" name="support-v4-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="relinker-1.2.2" level="project" />
-    <orderEntry type="library" exported="" name="realm-annotations-3.5.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="pikkart_ar_sdk-" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-26.0.0-alpha1" level="project" />
-    <orderEntry type="library" exported="" name="realm-android-library-3.5.0" level="project" />
     <orderEntry type="library" exported="" name="design-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="support-compat-26.0.0-alpha1" level="project" />
