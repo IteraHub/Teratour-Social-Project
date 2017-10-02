@@ -1,22 +1,30 @@
 package com.pikkart.trial.teratour;
 
+import android.animation.Animator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -90,54 +98,116 @@ public class ImageCloudRecoClass extends AppCompatActivity implements IRecogniti
         RelativeLayout cameraTopLayer = new RelativeLayout(this);
         cameraTopLayer.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
 
-        //profile launcher view
-        Button profilebutton = (Button) inflater.inflate(R.layout.profile_launcher, cameraTopLayer, false);
-        cameraTopLayer.addView(profilebutton);
+
+        //menu layout
+
+
+        /*NavigationView drawerLayout = (NavigationView) inflater.inflate(R.layout.menu, null);
+
+        cameraTopLayer.addView(drawerLayout);*/
+
+        /*menuList = drawerLayout.findViewById(R.id.left_drawer);
+        String[] testList = {"Profile", "Name"};
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, testList);
+        menuList.setAdapter(arrayAdapter);*/
+
+
+
+
+        //comment launcher view
+        Button commentButton = (Button) inflater.inflate(R.layout.comment_launcher, cameraTopLayer, false);
+        cameraTopLayer.addView(commentButton);
+
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), CommentLayout.class));
+            }
+        });
 
         //like button view
         Button likeButton = (Button) inflater.inflate(R.layout.like_view, cameraTopLayer, false);
         cameraTopLayer.addView(likeButton);
 
         //add sliding drawer view
-        RelativeLayout slidingLayout = new RelativeLayout(this);
-        slidingLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        //RelativeLayout slidingLayout = new RelativeLayout(this);
+        //slidingLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 
-        RelativeLayout slideLayout = (RelativeLayout) inflater.inflate(R.layout.sliding_drawer, cameraTopLayer, false);
-        slidingLayout.addView(slideLayout);
+        //RelativeLayout slideLayout = (RelativeLayout) inflater.inflate(R.layout.sliding_drawer, cameraTopLayer, false);
+        //slidingLayout.addView(slideLayout);
 
-        //menu layout view
-        DrawerLayout drawerLayout = (DrawerLayout) inflater.inflate(R.layout.menu, cameraTopLayer, false);
-        menuList = drawerLayout.findViewById(R.id.left_drawer);
-        String[] testList = {"Profile", "Name"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, testList);
-        menuList.setAdapter(arrayAdapter);
-        cameraTopLayer.addView(drawerLayout);
+        //add slide up launcher
+        Button slideUp = (Button)inflater.inflate(R.layout.slideup_layout, cameraTopLayer, false);
+        cameraTopLayer.addView(slideUp);
+
+        //add slide up button
+
+        final CardView cardView =  (CardView)inflater.inflate(R.layout.marker_info_layout, cameraTopLayer, false);
+
+        cameraTopLayer.addView(cardView);
+
+        slideUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cardView.getVisibility() == View.VISIBLE){
+                    cardView.setVisibility(View.INVISIBLE);
+                    cardView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down));
+
+                }else{
+
+                    cardView.setVisibility(View.VISIBLE);
+                    cardView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up));
+                }
+
+            }
+        });
+
+
+        //define navigation layout
+
+        NavigationView navigationView = new NavigationView(this);
+        navigationView.inflateHeaderView(R.layout.layout2);
+        navigationView.inflateMenu(R.menu.nav_menu);
+
+
+        NavigationView.LayoutParams navParams = new NavigationView.LayoutParams(
+                NavigationView.LayoutParams.WRAP_CONTENT,
+                NavigationView.LayoutParams.MATCH_PARENT
+        );
+        cameraTopLayer.addView(navigationView, navParams);
+
+
+        //define dashboard Button
+        Button dashButton = (Button) inflater.inflate(R.layout.profile_launcher, cameraTopLayer, false);
+        cameraTopLayer.addView(dashButton);
+
+            //assign dashButton handler
+            dashButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getBaseContext(), DashBoard.class));
+                }
+            });
+
 
         m_arView = new ARView(this);
         m_arView.setOnTouchListener(this);
         addContentView(m_arView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         addContentView(cameraTopLayer, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-        addContentView(slidingLayout, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
 
-        //assign profile launcher handler
-        profilebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), DashBoard.class));
-            }
-        });
 
         //assign menu list handler
-        menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(ImageCloudRecoClass.this, "AR App in Progress " + i, Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         /*FragmentManager fragmentManager = getSupportFragmentManager();
         MarkerDetailsDialogFragment markerDetailsDialogFragment = MarkerDetailsDialogFragment.newInstance("");
         markerDetailsDialogFragment.show(fragmentManager, "fragment_2");*/
+
 
         RecognitionFragment _cameraFragment = ((RecognitionFragment) getFragmentManager().findFragmentById(R.id.pikkart_ar_fragment));
         _cameraFragment.startRecognition(new RecognitionOptions(
