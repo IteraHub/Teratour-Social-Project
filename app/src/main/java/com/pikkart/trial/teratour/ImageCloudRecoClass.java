@@ -203,13 +203,13 @@ public class ImageCloudRecoClass extends AppCompatActivity implements IRecogniti
         Button dashButton = (Button) inflater.inflate(R.layout.profile_launcher, cameraTopLayer, false);
         cameraTopLayer.addView(dashButton);
 
-        //assign dashButton handler
-        dashButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), DashBoard.class));
-            }
-        });
+            //assign dashButton handler
+            dashButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getBaseContext(), DashBoard.class));
+                }
+            });
 
 
         m_arView = new ARView(this);
